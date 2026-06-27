@@ -15,7 +15,7 @@ export default function LeadForm() {
 
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDbVkpopPnyMq013J0cAup5qK2Lx2zuaDkDBAMoDEP3Z_Y5FSN3fTmLqOBBIcZW-z2/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO7X9pDTcBz5j0qWVY0N8UDmX_6sNyQk8rJWJk-af8Ca3IW-fbholQFavcjoSB07WA/exec";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
