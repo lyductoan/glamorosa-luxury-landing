@@ -1,8 +1,62 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function LeadForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    source: "Website / Landing Page",
+    interest: "Mua để sử dụng",
+    note: "",
+  });
+
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfyyDAh105vHcxCvyimf7LPhoGT61MUaWrvoPzPjf4uVs8Mjx4UYJtMMQxfjVeFDLg/exec";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setStatus("loading");
+
+    const formParams = new URLSearchParams();
+    formParams.append("name", formData.name);
+    formParams.append("email", formData.email);
+    formParams.append("phone", formData.phone);
+    formParams.append("channel", formData.source);
+    formParams.append("purpose", formData.interest);
+    formParams.append("note", formData.note);
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: formParams,
+      });
+
+      setStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        source: "Website / Landing Page",
+        interest: "Mua để sử dụng",
+        note: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form", error);
+      setStatus("error");
+    }
+  };
+
   return (
     <section className="py-24 bg-charcoal text-white relative">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
@@ -33,13 +87,16 @@ export default function LeadForm() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-white/5 backdrop-blur-md p-8 md:p-12 border border-white/10"
         >
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-sans text-gray-300 mb-2 uppercase tracking-wider">Họ và Tên *</label>
                 <input 
                   type="text" 
                   id="name" 
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans"
                   placeholder="Nhập họ tên của bạn"
                 />
@@ -48,23 +105,54 @@ export default function LeadForm() {
                 <label htmlFor="phone" className="block text-sm font-sans text-gray-300 mb-2 uppercase tracking-wider">Số Điện Thoại *</label>
                 <input 
                   type="tel" 
-                  id="phone" 
+                  id="phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans"
                   placeholder="Nhập số điện thoại"
                 />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-sans text-gray-300 mb-2 uppercase tracking-wider">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans"
+                  placeholder="Nhập email (không bắt buộc)"
+                />
+              </div>
+              <div>
+                <label htmlFor="source" className="block text-sm font-sans text-gray-300 mb-2 uppercase tracking-wider">Kênh Tư Vấn</label>
+                <select 
+                  id="source"
+                  value={formData.source}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans appearance-none"
+                >
+                  <option value="Website / Landing Page" className="bg-charcoal text-white">Website / Landing Page</option>
+                  <option value="Facebook" className="bg-charcoal text-white">Facebook</option>
+                  <option value="Zalo" className="bg-charcoal text-white">Zalo</option>
+                  <option value="Bạn bè giới thiệu" className="bg-charcoal text-white">Bạn bè giới thiệu</option>
+                  <option value="Khác" className="bg-charcoal text-white">Khác</option>
+                </select>
               </div>
             </div>
             
             <div>
               <label htmlFor="interest" className="block text-sm font-sans text-gray-300 mb-2 uppercase tracking-wider">Mối Quan Tâm</label>
               <select 
-                id="interest" 
+                id="interest"
+                value={formData.interest}
+                onChange={handleChange}
                 className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans appearance-none"
               >
-                <option value="buy" className="bg-charcoal text-white">Mua để sử dụng</option>
-                <option value="gift" className="bg-charcoal text-white">Mua làm quà tặng</option>
-                <option value="custom" className="bg-charcoal text-white">Thiết kế theo yêu cầu</option>
-                <option value="other" className="bg-charcoal text-white">Tư vấn khác</option>
+                <option value="Mua để sử dụng" className="bg-charcoal text-white">Mua để sử dụng</option>
+                <option value="Mua làm quà tặng" className="bg-charcoal text-white">Mua làm quà tặng</option>
+                <option value="Thiết kế theo yêu cầu" className="bg-charcoal text-white">Thiết kế theo yêu cầu</option>
+                <option value="Tư vấn khác" className="bg-charcoal text-white">Tư vấn khác</option>
               </select>
             </div>
 
@@ -73,17 +161,32 @@ export default function LeadForm() {
               <textarea 
                 id="note" 
                 rows={3}
+                value={formData.note}
+                onChange={handleChange}
                 className="w-full bg-transparent border-b border-gray-500 py-3 text-white focus:outline-none focus:border-gold transition-colors font-sans resize-none"
                 placeholder="Ví dụ: Cần tư vấn chọn quà sinh nhật cho vợ..."
               />
             </div>
 
+            {status === "success" && (
+              <div className="p-4 bg-green-900/50 border border-green-500 text-green-300 font-sans text-sm text-center">
+                Gửi thông tin thành công! Chuyên viên của chúng tôi sẽ sớm liên hệ với bạn.
+              </div>
+            )}
+            
+            {status === "error" && (
+              <div className="p-4 bg-red-900/50 border border-red-500 text-red-300 font-sans text-sm text-center">
+                Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại sau.
+              </div>
+            )}
+
             <div className="pt-6 text-center">
               <button 
-                type="button" 
-                className="px-12 py-4 bg-gold text-charcoal font-sans uppercase tracking-widest text-sm hover:bg-white transition-colors w-full md:w-auto"
+                type="submit" 
+                disabled={status === "loading"}
+                className="px-12 py-4 bg-gold text-charcoal font-sans uppercase tracking-widest text-sm hover:bg-white transition-colors w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Nhận Tư Vấn Ngay
+                {status === "loading" ? "Đang Gửi..." : "Nhận Tư Vấn Ngay"}
               </button>
               <p className="text-xs text-gray-400 font-sans mt-4">
                 Thông tin của bạn được bảo mật tuyệt đối. Chúng tôi sẽ liên hệ lại trong vòng 2 giờ làm việc.
