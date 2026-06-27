@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export default function LeadForm() {
   const [formData, setFormData] = useState({
@@ -15,8 +15,11 @@ export default function LeadForm() {
 
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [orderCode, setOrderCode] = useState<string>("");
+  const [showQR, setShowQR] = useState(false);
+  const [countdown, setCountdown] = useState(30);
 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO7X9pDTcBz5j0qWVY0N8UDmX_6sNyQk8rJWJk-af8Ca3IW-fbholQFavcjoSB07WA/exec";
+  const ZALO_GROUP = "https://zalo.me/g/sdczb5ehiqm9tyimg1th";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -53,6 +56,8 @@ export default function LeadForm() {
 
       setOrderCode(newOrderCode);
       setStatus("success");
+      setShowQR(true);
+      setCountdown(30);
       setFormData({
         name: "",
         email: "",
@@ -66,6 +71,18 @@ export default function LeadForm() {
       setStatus("error");
     }
   };
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (showQR && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [showQR, countdown]);
 
   return (
     <section className="py-24 bg-charcoal text-white relative">
@@ -178,14 +195,6 @@ export default function LeadForm() {
               />
             </div>
 
-            {status === "success" && (
-              <div className="p-6 bg-green-900/50 border border-green-500 text-green-300 font-sans text-center">
-                <p className="font-semibold text-lg mb-2">Gửi thông tin thành công!</p>
-                <p className="mb-4">Mã đơn hàng của bạn là: <span className="font-bold text-white bg-green-800 px-2 py-1 rounded">{orderCode}</span></p>
-                <p className="text-sm">Vui lòng thanh toán số tiền <span className="font-bold text-white">19.000đ</span> với nội dung chuyển khoản là mã đơn hàng trên để chúng tôi sắp xếp lịch hẹn nhanh nhất.</p>
-              </div>
-            )}
-            
             {status === "error" && (
               <div className="p-4 bg-red-900/50 border border-red-500 text-red-300 font-sans text-sm text-center">
                 Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại sau.
@@ -207,6 +216,81 @@ export default function LeadForm() {
           </form>
         </motion.div>
       </div>
+
+      {/* QR Code Modal */}
+      <AnimatePresence>
+        {showQR && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-charcoal border border-gold/30 p-8 max-w-md w-full relative"
+            >
+              <button 
+                onClick={() => setShowQR(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              
+              <div className="text-center">
+                <h3 className="text-2xl font-serif text-gold mb-2">Quét Mã Thanh Toán</h3>
+                <p className="text-gray-300 font-sans text-sm mb-6">
+                  Vui lòng quét mã QR bên dưới để thanh toán <strong className="text-white">19.000đ</strong> xác nhận lịch hẹn riêng tư.
+                </p>
+
+                <div className="bg-white p-4 rounded-xl inline-block mb-6 relative shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={`https://vietqr.app/img?bank=BIDV&acc=962476666688888&amount=19000&addInfo=${orderCode}&template=compact&showinfo=true&holder=NGUYEN%20PHUOC%20VINH%20HUNG`} 
+                    alt="VietQR Payment"
+                    className="w-64 h-auto"
+                  />
+                </div>
+
+                <div className="space-y-4 font-sans text-sm">
+                  <div className="bg-white/5 p-4 border border-white/10 text-left rounded">
+                    <p className="text-gray-400 mb-1">Mã đơn hàng (Nội dung chuyển khoản):</p>
+                    <p className="font-bold text-xl text-white font-mono bg-black/50 p-2 text-center rounded tracking-widest">{orderCode}</p>
+                  </div>
+                  
+                  {countdown > 0 ? (
+                    <div className="flex flex-col items-center justify-center space-y-2 pt-2">
+                      <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
+                      <p className="text-gold">Đang chờ xác thực tự động... ({countdown}s)</p>
+                    </div>
+                  ) : (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="pt-2 space-y-3"
+                    >
+                      <p className="text-gray-300">Nếu bạn đã chuyển khoản, hãy tham gia nhóm Zalo để chuyên viên của chúng tôi hỗ trợ ngay.</p>
+                      <a 
+                        href={ZALO_GROUP}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors rounded text-center shadow-lg"
+                        onClick={() => setShowQR(false)}
+                      >
+                        Xác nhận đã chuyển khoản
+                      </a>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
