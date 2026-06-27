@@ -6,17 +6,17 @@ const styles = [
   {
     title: "Thanh Lịch Chốn Công Sở",
     description: "Điểm nhấn tinh tế, tôn lên phong thái tự tin và chuyên nghiệp.",
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=2938&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-ceSCZzjTReg?q=80&w=2938&auto=format&fit=crop"
   },
   {
     title: "Quyến Rũ Dạ Tiệc",
     description: "Thu hút mọi ánh nhìn, tỏa sáng lộng lẫy trong những sự kiện quan trọng.",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2938&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-s8V4rgtidsg?q=80&w=2938&auto=format&fit=crop"
   },
   {
     title: "Dạo Phố Cuối Tuần",
     description: "Dễ dàng kết hợp cùng trang phục thường ngày, mang lại vẻ ngoài năng động nhưng vẫn sang trọng.",
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=2938&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-n8zMGARLbhM?q=80&w=2938&auto=format&fit=crop"
   }
 ];
 

@@ -45,7 +45,7 @@ export default function ProductDetails() {
             
             <div className="w-full h-[400px] bg-gray-200 relative overflow-hidden group">
                {/* Placeholder for detail image */}
-               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599643478524-fb66f70a00ef?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105" />
+               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105" />
             </div>
           </motion.div>
 

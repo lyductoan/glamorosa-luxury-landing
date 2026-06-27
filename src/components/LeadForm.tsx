@@ -85,8 +85,12 @@ export default function LeadForm() {
   }, [showQR, countdown]);
 
   return (
-    <section className="py-24 bg-charcoal text-white relative">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
+    <section className="py-24 relative overflow-hidden bg-charcoal">
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-10"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?q=80&w=2938&auto=format&fit=crop)' }}
+      />
+      <div className="absolute inset-0 bg-charcoal/80" />
       
       <div className="container mx-auto px-6 lg:px-12 max-w-4xl relative z-10">
         <motion.div

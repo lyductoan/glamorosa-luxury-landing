@@ -8,19 +8,19 @@ const testimonials = [
     name: "Lê Ngọc Diệp",
     role: "Doanh nhân",
     content: "Thiết kế tinh tế, không hề phô trương nhưng lại vô cùng sang trọng. Tôi rất ấn tượng với dịch vụ chăm sóc khách hàng và cách Glamorosa đóng gói sản phẩm. Một trải nghiệm thực sự đẳng cấp.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1288&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-woIA_Sjo9hE?q=80&w=1288&auto=format&fit=crop"
   },
   {
     name: "Phạm Phương Anh",
     role: "Giám đốc Sáng tạo",
     content: "Sợi dây chuyền này là mảnh ghép hoàn hảo cho phong cách Minimalist tôi theo đuổi. Chất lượng chế tác hoàn hảo từng chi tiết nhỏ nhất. Chắc chắn tôi sẽ quay lại.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-pm7zFyyLUuk?q=80&w=1364&auto=format&fit=crop"
   },
   {
     name: "Hoàng Minh Tuấn",
     role: "Kiến trúc sư",
     content: "Tôi mua tặng vợ nhân kỷ niệm 10 năm ngày cưới. Cô ấy đã rất hạnh phúc. Cảm ơn sự tư vấn tận tình của đội ngũ, đã giúp tôi chọn được món quà ý nghĩa nhất.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1287&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-v_dm8w5FszM?q=80&w=1287&auto=format&fit=crop"
   }
 ];
 

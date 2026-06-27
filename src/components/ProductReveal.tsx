@@ -25,10 +25,10 @@ export default function ProductReveal() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="aspect-[4/5] bg-champagne/40 relative overflow-hidden group"
           >
-            {/* Placeholder for Product Image */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-charcoal/30 font-serif text-2xl tracking-widest uppercase">Packshot</span>
-            </div>
+            {/* Product Image (Packshot) */}
+            <div 
+              className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+            />
             <div className="absolute inset-0 bg-charcoal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>
           
@@ -40,10 +40,10 @@ export default function ProductReveal() {
             className="flex flex-col space-y-8"
           >
             <div className="aspect-square bg-champagne/20 relative overflow-hidden group w-full md:w-3/4 self-end">
-               {/* Placeholder for Model Image */}
-               <div className="absolute inset-0 flex items-center justify-center">
-                 <span className="text-charcoal/30 font-serif text-xl tracking-widest uppercase">On Model</span>
-               </div>
+               {/* Model Image */}
+               <div 
+                 className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1588444837495-c6bcfeceb3f5?q=80&w=2938&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+               />
             </div>
             
             <div className="max-w-md self-end text-right">

@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 
 export default function ValueAsGift() {
   return (
-    <section className="py-24 bg-charcoal text-white relative overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-20">
-         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center" />
-      </div>
+    <section className="py-24 bg-white relative overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-[0.03] grayscale pointer-events-none"
+        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2938&auto=format&fit=crop)' }}
+      />
       
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -19,12 +20,13 @@ export default function ValueAsGift() {
             className="order-2 lg:order-1"
           >
             <div className="aspect-square relative overflow-hidden">
-              <div className="absolute inset-0 border border-gold/30 m-4 z-10 pointer-events-none" />
-              <img 
-                src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=2940&auto=format&fit=crop" 
-                alt="Luxury Gift Packaging" 
-                className="object-cover w-full h-full"
-              />
+              <div className="relative aspect-[4/5] rounded-t-full overflow-hidden border-8 border-ivory shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?q=80&w=2940&auto=format&fit=crop" 
+                  alt="Luxury Gift Packaging" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </motion.div>
 
