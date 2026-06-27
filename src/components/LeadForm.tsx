@@ -14,6 +14,7 @@ export default function LeadForm() {
   });
 
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [orderCode, setOrderCode] = useState<string>("");
 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO7X9pDTcBz5j0qWVY0N8UDmX_6sNyQk8rJWJk-af8Ca3IW-fbholQFavcjoSB07WA/exec";
 
@@ -27,6 +28,13 @@ export default function LeadForm() {
 
     setStatus("loading");
 
+    // Sinh mã đơn hàng "AI" + 10 số ngẫu nhiên
+    let randomDigits = "";
+    for (let i = 0; i < 10; i++) {
+      randomDigits += Math.floor(Math.random() * 10).toString();
+    }
+    const newOrderCode = "AI" + randomDigits;
+
     const formParams = new URLSearchParams();
     formParams.append("name", formData.name);
     formParams.append("email", formData.email);
@@ -34,6 +42,7 @@ export default function LeadForm() {
     formParams.append("channel", formData.source);
     formParams.append("purpose", formData.interest);
     formParams.append("note", formData.note);
+    formParams.append("orderCode", newOrderCode);
 
     try {
       await fetch(SCRIPT_URL, {
@@ -42,6 +51,7 @@ export default function LeadForm() {
         body: formParams,
       });
 
+      setOrderCode(newOrderCode);
       setStatus("success");
       setFormData({
         name: "",
@@ -169,8 +179,10 @@ export default function LeadForm() {
             </div>
 
             {status === "success" && (
-              <div className="p-4 bg-green-900/50 border border-green-500 text-green-300 font-sans text-sm text-center">
-                Gửi thông tin thành công! Chuyên viên của chúng tôi sẽ sớm liên hệ với bạn.
+              <div className="p-6 bg-green-900/50 border border-green-500 text-green-300 font-sans text-center">
+                <p className="font-semibold text-lg mb-2">Gửi thông tin thành công!</p>
+                <p className="mb-4">Mã đơn hàng của bạn là: <span className="font-bold text-white bg-green-800 px-2 py-1 rounded">{orderCode}</span></p>
+                <p className="text-sm">Vui lòng thanh toán số tiền <span className="font-bold text-white">19.000đ</span> với nội dung chuyển khoản là mã đơn hàng trên để chúng tôi sắp xếp lịch hẹn nhanh nhất.</p>
               </div>
             )}
             
